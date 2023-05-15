@@ -28,11 +28,18 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-    const cholateCollection = client.db('chocolateDB').collection('chocolates')
+    const chocolateCollection = client.db('chocolateDB').collection('chocolates');
+
+    app.get('/chocolates', async(req, res) =>{
+        const cursor = chocolateCollection.find();
+        const result = await cursor.toArray();
+        res.send(result);
+    })
+
     app.post('/chocolates', async(req, res) =>{
         const newChocolate = req.body;
         console.log(newChocolate);
-        const result = await cholateCollection.insertOne(newChocolate);
+        const result = await chocolateCollection.insertOne(newChocolate);
         res.send(result)
     })
 
