@@ -35,7 +35,13 @@ async function run() {
         const result = await cursor.toArray();
         res.send(result);
     })
-
+    // update operation
+    app.get('/chocolates/:id', async(req, res) =>{
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id)}
+        const result = await chocolateCollection.findOne(query);
+        res.send(result);
+    })
     app.post('/chocolates', async(req, res) =>{
         const newChocolate = req.body;
         console.log(newChocolate);
